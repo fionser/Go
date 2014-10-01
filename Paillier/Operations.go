@@ -3,6 +3,7 @@ package Paillier
 import (
 	"crypto/rand"
 	"math/big"
+    "log"
 )
 
 func Copy(a *big.Int) *big.Int {
@@ -14,6 +15,7 @@ func GeneratePrime(bits int) *big.Int {
 	if err == nil {
 		return p
 	} else {
+        log.Fatal("Security Random Failed")
 		return nil
 	}
 }
