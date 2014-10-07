@@ -50,15 +50,19 @@ func AddBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
 }
 
 func MutableAddBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
-    cst.Exp(pk.G, cst, pk.N_sq)
-    cst.Mul(cst, ctx)
-    return cst.Mod(cst, pk.N_sq)
+    cst.Set(Encrypt(pk, cst))
+    return MutableAdd(pk, cst, ctx)
 }
 
 func SubBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
     res := big.NewInt(0).Exp(pk.G, cst, pk.N_sq)
     res.ModInverse(res, pk.N_sq)
     return res.Mul(res, ctx)
+}
+
+func DivBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
+    cstModInverse := ModInverse(cst, pk.N)
+    return MutableAddBigConst(pk, ctx, cstModInverse)
 }
 
 func ModInverse(ctx, n*big.Int) *big.Int {
