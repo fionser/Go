@@ -50,7 +50,7 @@ func AddBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
 }
 
 func MutableAddBigConst(pk PublicKey, ctx, cst *big.Int) *big.Int {
-    cst.Set(Encrypt(pk, cst))
+    cst.Set(EncryptBig(pk, cst))
     return MutableAdd(pk, cst, ctx)
 }
 
